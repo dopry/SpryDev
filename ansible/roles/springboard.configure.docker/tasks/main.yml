@@ -1,0 +1,26 @@
+---
+- name: Add Docker repository key
+  apt_key:
+    id: "{{ apt_key_sig }}"
+    url: "{{ apt_key_url }}"
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ apt_repository }}"
+    update_cache: yes
+    state: present
+
+- name: Install (or update) docker.io
+  apt:
+    name: "{{ docker_io_pkg }}"
+    state: latest
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    pkg: "{{ docker_lxc_pkg }}"
+  notify: "Start Docker"
+
+- name: Install Docker-py
+  pip: name=docker-py

@@ -1,0 +1,7 @@
+---
+- hosts: dev
+  sudo: yes
+  pre_tasks:
+    - include_vars: "{{ inventory_dir }}/vault.yml"
+  roles:
+    - springboard.configure.docker
